@@ -16,10 +16,12 @@ solution was based on the mixing of transactions from different addresses, it wo
 track of the coinbase transactions that an unspent transaction originates from, we can keep track
 of a mixture of addresses. Mint centrality is based on the heuristic that there is also a relation between the address and the coinbase transactions that all of its UTXOs are associated with.
 
+
 The vertices of the graph are used to denote bitcoin transactions and edge pointing from a
 transaction using an output to a transaction creating it, so the coin base transaction won’t have
 any outgoing edge. The graph generated is a Directed acyclic graph as there would be no cycles
-because coinbase transactions do not depend on any transactions. The mint centrality can be
+because coinbase transactions do not depend on any transactions. Whenever a new block is created, its transactions are added to the graph. The coinbase transaction does not depend on any transactions, hence only more recent transactions can use its outputs. Other transactions use the outputs of previous
+transactions, thus with every more recent transaction, at least one directed edge to an older transaction is introduced. The mint centrality can be
 calculated using a sparse matrix M for all the known addresses at height h. Matrix M is updated
 whenever a new block is added to the blockchain. To evaluate their proposed mint centrality
 they inspected 50 addresses.
